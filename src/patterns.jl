@@ -17,7 +17,7 @@ function renko(hlc::Matrix{T}; box_size::T=10.0, use_atr::Bool=false, n::Int=14)
 `Array{Int}` object of size Nx1 (where N is the number rows in `x`) where each element gives the Renko bar number of the corresponding row in `x`.
 
 """
-function renko(x::Array{T}; box_size::T=10.0)::Array{Int} where {T<:Real}
+function renko(x::AbstractArray{T}; box_size::T=10.0)::Array{Int} where {T<:Real}
     # Renko chart bar identification with traditional methodology (constant box size)
     @assert box_size != 0 "Argument `box_size` must be nonzero."
     if box_size < 0.0
@@ -34,7 +34,7 @@ function renko(x::Array{T}; box_size::T=10.0)::Array{Int} where {T<:Real}
     return bar_id
 end
 
-function renko(hlc::Matrix{T}; box_size::T=10.0, use_atr::Bool=false, n::Int=14)::Array{Int} where {T<:Real}
+function renko(hlc::AbstractMatrix{T}; box_size::T=10.0, use_atr::Bool=false, n::Int=14)::Array{Int} where {T<:Real}
     # Renko chart bar identification with option to use ATR or traditional method (constant box size)
     if use_atr
         bar_id = ones(Int, size(hlc,1))

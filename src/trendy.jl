@@ -7,7 +7,7 @@ maxima(x::Array{T}; threshold::T=0.0, order::Int=1) where {T<:Real}
 
 Estimate local maxima of a time series
 """
-function maxima(x::Array{T}; threshold::T=0.0, order::Int=1) where {T<:Real}
+function maxima(x::AbstractArray{T}; threshold::T=0.0, order::Int=1) where {T<:Real}
     @assert threshold >= 0.0 "threshold must be positive"
     @assert order > 0 "order must be a positive integer"
     n = size(x,1)
@@ -32,7 +32,7 @@ minima(x::Array{T}; threshold::T=0.0, order::Int=1) where {T<:Real}
 
 Estimate local minima of a time series
 """
-function minima(x::Array{T}; threshold::T=0.0, order::Int=1) where {T<:Real}
+function minima(x::AbstractArray{T}; threshold::T=0.0, order::Int=1) where {T<:Real}
     @assert threshold <= 0.0 "threshold must be negative"
     @assert order > 0 "order must be a positive integer"
     n = size(x,1)
@@ -65,7 +65,7 @@ resistance(x::Array{T}; order::Int=1, threshold::T=0.0) where {T<:Real}
 
 Estimate resistance lines of a financial time series
 """
-function resistance(x::Array{T}; order::Int=1, threshold::T=0.0) where {T<:Real}
+function resistance(x::AbstractArray{T}; order::Int=1, threshold::T=0.0) where {T<:Real}
     out = zeros(size(x))
     crit = maxima(x, threshold=threshold, order=order)
     out[.!crit] .= NaN
@@ -83,7 +83,7 @@ support(x::Array{T}; order::Int=1, threshold::T=0.0) where {T<:Real}
 
 Estimate support lines of a financial time series
 """
-function support(x::Array{T}; order::Int=1, threshold::T=0.0) where {T<:Real}
+function support(x::AbstractArray{T}; order::Int=1, threshold::T=0.0) where {T<:Real}
     out = zeros(size(x))
     crit = minima(x, threshold=threshold, order=order)
     out[.!crit] .= NaN
