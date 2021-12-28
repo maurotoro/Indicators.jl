@@ -7,7 +7,7 @@ crossover(x::Array{T}, y::Array{T}) where {T<:Real}
 
 Find where `x` crosses over `y` (returns boolean vector where crossover occurs)
 """
-function crossover(x::Array{T}, y::Array{T}) where {T<:Real}
+function crossover(x::AbstractArray{T}, y::AbstractArray{T}) where {T<:Real}
     @assert size(x,1) == size(y,1)
     out = falses(size(x))
     @inbounds for i in 2:size(x,1)
@@ -23,7 +23,7 @@ crossunder(x::Array{T}, y::Array{T}) where {T<:Real}
 
 Find where `x` crosses under `y` (returns boolean vector where crossunder occurs)
 """
-function crossunder(x::Array{T}, y::Array{T}) where {T<:Real}
+function crossunder(x::AbstractArray{T}, y::AbstractArray{T}) where {T<:Real}
     @assert size(x,1) == size(y,1)
     out = falses(size(x))
     @inbounds for i in 2:size(x,1)
@@ -39,7 +39,7 @@ wilder_sum(x::Vector{T}; n::Int=10)::Vector{T}
 
 Welles Wilder summation of an array
 """
-function wilder_sum(x::Vector{T}; n::Int=10)::Vector{T} where {T<:Real}
+function wilder_sum(x::AbstractVector{T}; n::Int=10)::Vector{T} where {T<:Real}
     @assert n<size(x,1) && n>0 "Argument n is out of bounds."
     nf = float(n)  # type stability -- all arithmetic done on floats
     out = zeros(size(x))
@@ -49,7 +49,7 @@ function wilder_sum(x::Vector{T}; n::Int=10)::Vector{T} where {T<:Real}
     end
     return out
 end
-wilder_sum(X::Matrix; n::Int=10)::Matrix = hcat((wilder_sum(X[:,j], n=n) for j in 1:size(X,2))...)
+wilder_sum(X::AbstractMatrix; n::Int=10)::Matrix = hcat((wilder_sum(X[:,j], n=n) for j in 1:size(X,2))...)
 
 """
 (Adapted from StatsBase: https://raw.githubusercontent.com/JuliaStats/StatsBase.jl/master/src/scalarstats.jl)
@@ -88,7 +88,7 @@ diffn(X::Matrix; n::Int=1)::Matrix = hcat([diffn(X[:,j], n=n) for j in 1:size(X,
 
 Lagged differencing
 """
-function diffn(x::Vector{T}; n::Int=1)::Vector{T} where {T<:Real}
+function diffn(x::AbstractVector{T}; n::Int=1)::Vector{T} where {T<:Real}
     @assert n<size(x,1) && n>0 "Argument n out of bounds."
     dx = zeros(size(x))
     dx[1:n] .= NaN
@@ -97,4 +97,4 @@ function diffn(x::Vector{T}; n::Int=1)::Vector{T} where {T<:Real}
     end
     return dx
 end
-diffn(X::Matrix; n::Int=1)::Matrix = hcat([diffn(X[:,j], n=n) for j in 1:size(X,2)]...)
+diffn(X::AbstractMatrix; n::Int=1)::Matrix = hcat([diffn(X[:,j], n=n) for j in 1:size(X,2)]...)
