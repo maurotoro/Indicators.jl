@@ -102,6 +102,7 @@ cci(X::TS; args...) = hlc_fun(X, cci, [:CCI]; args...)
 stoch(X::TS; args...) = hlc_fun(X, stoch, [:Stochastic,:Signal]; args...)
 smi(X::TS; args...) = hlc_fun(X, smi, [:SMI,:Signal]; args...)
 donch(X::TS; args...) = hl_fun(X, donch, [:Low,:Mid,:High]; args...)
+ichimoku(X::TS; args...) = hlc_fun(X, ichimoku, [:Tenkan,:Kijun,:SenkouA,:SenkouB,:Chikou]; args...)
 aroon(X::TS; args...) = hl_fun(X, aroon, [:AroonUp,:AroonDn,:AroonOsc]; args...)
 
 ##### vol.jl ######

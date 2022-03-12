@@ -12,6 +12,10 @@
         @test size(tmp, 1) == N
         @test size(tmp, 2) == 3
         @test sum(isnan.(tmp)) != N
+        tmp = ichimoku(Z)
+        @test size(tmp, 1) == N
+        @test size(tmp, 2) == 5
+        @test sum(isnan.(tmp)) != N
         tmp = momentum(x)
         @test size(tmp, 1) == N
         @test size(tmp, 2) == 1
@@ -76,6 +80,9 @@
         tmp = donch(Y)
         @test size(tmp, 1) == N
         @test size(tmp, 2) == 3
+        tmp = ichimoku(Z)
+        @test size(tmp, 1) == N
+        @test size(tmp, 2) == 5
         tmp = momentum(x)
         @test size(tmp, 1) == N
         @test size(tmp, 2) == 1

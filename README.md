@@ -45,6 +45,7 @@ Indicators is a [Julia](https://julialang.org) package offering efficient implem
 - Williams %R
 - CCI (commodity channel index)
 - Donchian channel
+- Ichimoku Kinko Hyo
 - Aroon indicator + oscillator
 
 ### Volatility Indicators
