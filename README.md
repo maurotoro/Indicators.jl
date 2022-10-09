@@ -38,6 +38,7 @@ Indicators is a [Julia](https://julialang.org) package offering efficient implem
 - MACD (moving average convergence-divergence)
 - RSI (relative strength index)
 - ADX (average directional index)
+- Heikin-Ashi (Heiken Ashi)
 - Parabolic SAR (stop and reverse)
 - Fast & slow stochastics
 - SMI (stochastic momentum indicator)

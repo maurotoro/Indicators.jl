@@ -9,7 +9,7 @@ module Indicators
         aroon, donch, momentum, roc, macd, rsi, adx, psar, kst, wpr, cci, stoch, smi,
         bbands, tr, atr, keltner,
         crossover, crossunder,
-        renko,
+        renko, heikinashi,
         maxima, minima, support, resistance,
         rsrange, hurst
 

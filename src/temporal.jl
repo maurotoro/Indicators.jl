@@ -26,6 +26,15 @@ function hl_fun(X::TS, f::Function, flds::Vector{Symbol}; args...)
         error("Argument must have 2 columns or have High and Low fields.")
     end
 end
+function ohlc_fun(X::TS, f::Function, flds::Vector{Symbol}; args...)
+    if size(X,2) == 4
+        return TS(f(X.values; args...), X.index, flds)
+    elseif size(X,2) > 4 && has_open(X) && has_high(X) && has_low(X) && has_close(X)
+        return TS(f(ohlc(X).values; args...), X.index, flds)
+    else
+        error("Argument must have 4 columns or have Open, High, Low, and Close/Settle/Last fields.")
+    end
+end
 function cv_fun(X::TS, f::Function, flds::Vector{Symbol}; args...)
     if size(X,2) == 2
         return TS(f(X.values; args...), X.index, flds)
@@ -98,6 +107,7 @@ psar(X::TS; args...) = hl_fun(X, psar, [:PSAR]; args...)
 kst(X::TS; args...) = close_fun(X, kst, [:KST]; args...)
 wpr(X::TS; args...) = hlc_fun(X, wpr, [:WPR]; args...)
 adx(X::TS; args...) = hlc_fun(X, adx, [:DiPlus,:DiMinus,:ADX]; args...)
+heikinashi(X::TS; args...) = ohlc_fun(X, heikinashi, [:Open,:High,:Low,:Close]; args...)
 cci(X::TS; args...) = hlc_fun(X, cci, [:CCI]; args...)
 stoch(X::TS; args...) = hlc_fun(X, stoch, [:Stochastic,:Signal]; args...)
 smi(X::TS; args...) = hlc_fun(X, smi, [:SMI,:Signal]; args...)
