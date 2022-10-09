@@ -74,7 +74,6 @@ Indicators is a [Julia](https://julialang.org) package offering efficient implem
 - Chaikin Money Flow
 - Ultimate Oscillator
 - OBV (on-balance volume)
-- Heikin-Ashi
 - Too many more to name...always happy to hear suggestions though!
 
 ### Done
