@@ -49,6 +49,43 @@ function donch(hl::AbstractMatrix{T}; n::Int64=10, inclusive::Bool=true)::Matrix
     return [lower middle upper]
 end
 
+function shft(x::AbstractVector{T} where T<:Number, n::Integer)
+    if n == 0
+        return x
+    elseif n < 0
+        return vcat(x[1-n:end], fill(NaN, -n))
+    else
+        return vcat(fill(NaN, n), x[1:end-n])
+    end
+end
+
+"""
+```
+ichimoku(hlc::AbstractMatrix{T}; params=(9, 26, 26, 52, -26))::Matrix{Float64} where {T<:Real}
+```
+
+Ichimoku Kinko Hyo
+
+*Output*
+
+- Column 1: Tenkan-sen
+- Column 2: Kijun-sen
+- Column 3: Senkou Span A
+- Column 4: Senkou Span B
+- Column 5: Chikou Span
+"""
+function ichimoku(hlc::AbstractMatrix{T}; params=(10, 26, 26, 52, -26))::Matrix{Float64} where {T<:Real}
+    # Source: https://www.investopedia.com/terms/i/ichimokuchart.asp
+    # TODO: Implement option to get forward looking Senkous
+    @assert size(hlc,2) == 3 "Argument `hlc` must have exactly 3 columns."
+    tenkan = donch(hlc[:,1:2]; n=params[1], inclusive=true)[:,2]
+    kijun = donch(hlc[:,1:2]; n=params[2], inclusive=true)[:,2]
+    senkoua = shft((tenkan + kijun) /2, params[3])
+    senkoub = shft(donch(hlc[:,1:2]; n=params[4], inclusive=true)[:,2], params[3])
+    chikou = shft(hlc[:,3], params[5])
+    return [tenkan kijun senkoua senkoub chikou]
+end
+
 """
 ```
 momentum(x::Array{T}; n::Int64=1)::Array{Float64}
