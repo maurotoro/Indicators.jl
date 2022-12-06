@@ -164,6 +164,30 @@ end
 
 """
 ```
+heikinashi(ohlc::AbstractMatrix{<:Real})::Matrix{Float64}
+```
+
+Heikin Ashi
+
+*Output*
+
+- Column 1: Heikin Ashi open -- previous (o+c)/2
+- Column 2: Heikin Ashi high -- max(o,h)
+- Column 3: Heikin Ashi low -- min(o,l)
+- Column 4: Heikin Ashi close -- (o+h+l+c)/4
+"""
+function heikinashi(ohlc::AbstractMatrix{<:Real})::Matrix{Float64}
+    @assert size(ohlc,2) == 4 "Argument `ohlc` must have exactly 4 columns."
+    hao = vcat(NaN, mean(ohlc[1:end-1,[1,4]]; dims=2))
+    hah = max.(hao, ohlc[:,2])
+    hal = min.(hao, ohlc[:,3])
+    hac = mean(ohlc; dims=2)
+    return [hao hah hal hac]
+end
+
+
+"""
+```
 psar(hl::Array{T}; af_min::T=0.02, af_max::T=0.2, af_inc::T=af_min)::Array{Float64}
 ```
 
