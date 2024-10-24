@@ -10,7 +10,7 @@ Temporal = "a110ec8f-48c8-5d59-8f7e-f91bc4cc0c3d"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-Temporal = "^0.8"
+Temporal = ">=0.8.2"
 julia = "^1.2"
 
 [sources]
